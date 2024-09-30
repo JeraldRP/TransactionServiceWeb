@@ -1,5 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using TransactionUploadService.Services;
 
 namespace TransactionUploadService.Models.Entities
 {
@@ -7,6 +8,7 @@ namespace TransactionUploadService.Models.Entities
     {
         [Key]
         [StringLength(20)]
+        [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "Reference number must be alphanumeric.")]
         public string? ReferenceNumber { get; set; } // Alphanumeric, max length 20
 
         [Required]
@@ -21,8 +23,9 @@ namespace TransactionUploadService.Models.Entities
         public string? Name { get; set; } // Name validation
 
         [Required]
-        [DataType(DataType.DateTime)]
+        [CustomDateFormat("dd/MM/yyyy HH:mm:ss")]  // Custom date format validation
         public DateTime TransactionDate { get; set; } // Date format dd/MM/yyyy hh:mm:ss (UTC)
+
 
         [Required]
         [StringLength(5, MinimumLength = 3)]
@@ -36,4 +39,4 @@ namespace TransactionUploadService.Models.Entities
         [RegularExpression(@"^(Open|Matched|Cancelled)$", ErrorMessage = "Invalid order status.")]
         public string? OrderStatus { get; set; } // Open, Matched, Cancelled
     }
-  }
+}

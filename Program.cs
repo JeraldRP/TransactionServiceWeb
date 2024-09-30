@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TransactionUploadService.Data;
+using TransactionUploadService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     options.EnableSensitiveDataLogging();
 });
+// Configure Product Service
+builder.Services.AddScoped<TransactionService>();
 
 var app = builder.Build();
 
@@ -32,6 +35,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Transaction}/{action=Upload}/{id?}");
 
 app.Run();
