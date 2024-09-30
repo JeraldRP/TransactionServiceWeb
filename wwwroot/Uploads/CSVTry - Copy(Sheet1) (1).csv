@@ -1,0 +1,5 @@
+Id;ReferenceNumber;Quantity;Amount;Name;TransactionDate;Symbol;OrderSide;OrderStatus
+1;REF001;100;2500.5;John Doe;1/1/2024;APPL;Buy;Open
+2;REF002;150;3000;Jane Smith;1/2/2024;MSFT;Sell;Matched
+3;REF003;50;500.75;Michael Johnson;1/3/2024;GOOG;Buy;Cancelled
+4;REF004;200;6000;Emily Davis;1/4/2024;TSLA;Sell;Open

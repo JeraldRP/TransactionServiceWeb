@@ -1,60 +1,154 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.IO;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using TransactionUploadService.Services;
-using TransactionUploadService.Models; 
-
+using TransactionUploadService.Models.Entities;
+using TransactionUploadService.Data; // Adjust this namespace based on your project structure
 
 namespace TransactionUploadService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TransactionController : ControllerBase
+    public class TransactionsController : ControllerBase
     {
-        private readonly TransactionService _transactionService;
+        private readonly AppDbContext _context;
 
-        public TransactionController(TransactionService transactionService)
+        public TransactionsController(AppDbContext context)
         {
-            _transactionService = transactionService;
+            _context = context;
         }
 
-        [HttpPost("upload")]
-        public async Task<IActionResult> UploadTransactionFile(IFormFile file)
+        // 1. Retrieve all transactions
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Transaction>>> GetAllTransactions()
         {
-            if (file == null || file.Length == 0)
+            return await _context.Transactions.ToListAsync();
+        }
+
+        // 2. Retrieve transactions by symbol
+        [HttpGet("bySymbol")]
+        public async Task<ActionResult<IEnumerable<Transaction>>> GetTransactionsBySymbol(string symbol)
+        {
+            var transactions = await _context.Transactions
+                .Where(t => t.Symbol == symbol)
+                .ToListAsync();
+
+            if (!transactions.Any())
             {
-                return BadRequest("No file uploaded.");
+                return NotFound("No transactions found for the specified symbol.");
             }
 
-            // Check file size (limit to 1 MB)
-            if (file.Length > 1 * 1024 * 1024) // 1 MB
+            return Ok(transactions);
+        }
+
+        // 3. Retrieve transactions within a specified date range
+        [HttpGet("byDateRange")]
+        public async Task<ActionResult<IEnumerable<Transaction>>> GetTransactionsByDateRange(DateTime startDate, DateTime endDate)
+        {
+            var transactions = await _context.Transactions
+                .Where(t => t.TransactionDate >= startDate && t.TransactionDate <= endDate)
+                .ToListAsync();
+
+            if (!transactions.Any())
             {
-                return BadRequest("File size exceeds the maximum limit of 1 MB.");
+                return NotFound("No transactions found in the specified date range.");
             }
 
-            if (!file.FileName.EndsWith(".csv"))
+            return Ok(transactions);
+        }
+
+        // 4. Retrieve transactions by order side
+        [HttpGet("byOrderSide")]
+        public async Task<ActionResult<IEnumerable<Transaction>>> GetTransactionsByOrderSide(string orderSide)
+        {
+            // Validate orderSide
+            if (orderSide != "Buy" && orderSide != "Sell")
             {
-                return BadRequest("Invalid file type. Please upload a CSV file.");
+                return BadRequest("Invalid order side. Valid values are 'Buy' or 'Sell'.");
             }
 
-            var filePath = Path.Combine(Path.GetTempPath(), file.FileName);
+            var transactions = await _context.Transactions
+                .Where(t => t.OrderSide == orderSide)
+                .ToListAsync();
 
-            // Save the file to a temporary location
-            using (var stream = new FileStream(filePath, FileMode.Create))
+            if (!transactions.Any())
             {
-                await file.CopyToAsync(stream);
+                return NotFound("No transactions found for the specified order side.");
             }
 
-            // Process the transactions and get validation results
-            var validationResult = _transactionService.ProcessTransactionsFromCsv(filePath);
+            return Ok(transactions);
+        }
 
-            if (!validationResult.IsValid)
+        // 5. Retrieve transactions by order status
+        [HttpGet("byOrderStatus")]
+        public async Task<ActionResult<IEnumerable<Transaction>>> GetTransactionsByOrderStatus(string orderStatus)
+        {
+            // Validate orderStatus
+            var validOrderStatuses = new List<string> { "Open", "Matched", "Cancelled" };
+            if (!validOrderStatuses.Contains(orderStatus))
             {
-                return BadRequest(validationResult.ValidationMessages);
+                return BadRequest("Invalid order status. Valid values are 'Open', 'Matched', or 'Cancelled'.");
             }
 
-            return Ok(new { message = $"{validationResult.ValidTransactionCount} transactions processed successfully." });
+            var transactions = await _context.Transactions
+                .Where(t => t.OrderStatus == orderStatus)
+                .ToListAsync();
+
+            if (!transactions.Any())
+            {
+                return NotFound("No transactions found for the specified order status.");
+            }
+
+            return Ok(transactions);
+        }
+
+        // 6. Retrieve filtered transactions based on multiple criteria (optional, if needed)
+        [HttpGet("filter")]
+        public async Task<ActionResult<IEnumerable<Transaction>>> GetFilteredTransactions(string? symbol, DateTime? startDate, DateTime? endDate, string? orderSide, string? orderStatus)
+        {
+            var query = _context.Transactions.AsQueryable();
+
+            if (!string.IsNullOrEmpty(symbol))
+            {
+                query = query.Where(t => t.Symbol == symbol);
+            }
+
+            if (startDate.HasValue && endDate.HasValue)
+            {
+                query = query.Where(t => t.TransactionDate >= startDate.Value && t.TransactionDate <= endDate.Value);
+            }
+
+            if (!string.IsNullOrEmpty(orderSide))
+            {
+                // Validate orderSide
+                if (orderSide != "Buy" && orderSide != "Sell")
+                {
+                    return BadRequest("Invalid order side. Valid values are 'Buy' or 'Sell'.");
+                }
+                query = query.Where(t => t.OrderSide == orderSide);
+            }
+
+            if (!string.IsNullOrEmpty(orderStatus))
+            {
+                // Validate orderStatus
+                var validOrderStatuses = new List<string> { "Open", "Matched", "Cancelled" };
+                if (!validOrderStatuses.Contains(orderStatus))
+                {
+                    return BadRequest("Invalid order status. Valid values are 'Open', 'Matched', or 'Cancelled'.");
+                }
+                query = query.Where(t => t.OrderStatus == orderStatus);
+            }
+
+            var transactions = await query.ToListAsync();
+
+            if (!transactions.Any())
+            {
+                return NotFound("No transactions found with the provided filters.");
+            }
+
+            return Ok(transactions);
         }
     }
 }

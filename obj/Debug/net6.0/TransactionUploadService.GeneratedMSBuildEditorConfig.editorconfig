@@ -12,7 +12,7 @@ build_property.RootNamespace = TransactionUploadService
 build_property.ProjectDir = C:\Users\JeraldSamonte\source\repos\TransactionUploadService\TransactionUploadService\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
-build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = true
 build_property.MSBuildProjectDirectory = C:\Users\JeraldSamonte\source\repos\TransactionUploadService\TransactionUploadService
 build_property._RazorSourceGeneratorDebug = 
 
@@ -24,16 +24,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/JeraldSamonte/source/repos/TransactionUploadService/TransactionUploadService/Views/Home/UploadExcel.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxVcGxvYWRFeGNlbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/JeraldSamonte/source/repos/TransactionUploadService/TransactionUploadService/Views/Home/ViewLogs.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxWaWV3TG9ncy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/JeraldSamonte/source/repos/TransactionUploadService/TransactionUploadService/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/JeraldSamonte/source/repos/TransactionUploadService/TransactionUploadService/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/JeraldSamonte/source/repos/TransactionUploadService/TransactionUploadService/Views/Transaction/Upload.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVHJhbnNhY3Rpb25cVXBsb2FkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/JeraldSamonte/source/repos/TransactionUploadService/TransactionUploadService/Views/_ViewImports.cshtml]

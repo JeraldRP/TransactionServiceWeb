@@ -1,0 +1,35 @@
+﻿@model string[]
+
+<h2>Invalid Records Log</h2>
+
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-warning" role="alert">
+        @ViewBag.Message
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Record</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Length > 0)
+        {
+            foreach (var log in Model)
+            {
+                <tr>
+                    <td>@log</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td>No invalid records found.</td>
+            </tr>
+        }
+    </tbody>
+</table>

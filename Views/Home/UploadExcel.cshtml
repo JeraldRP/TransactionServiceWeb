@@ -1,0 +1,132 @@
+﻿@model IEnumerable<TransactionUploadService.Models.Entities.Transaction>
+
+@{
+    ViewData["Title"] = "Transaction Upload and Filter";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<!-- Alert messages for file upload -->
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-info">@ViewBag.Message</div>
+}
+
+<!-- Upload Excel File Section -->
+<h2>Upload Transaction File</h2>
+<form method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="file">Select Excel File:</label>
+        <input type="file" name="file" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Upload</button>
+</form>
+
+<!-- Transaction Filter Section -->
+<h2>Filter Transactions</h2>
+<form id="filter-form">
+    <div class="form-group">
+        <label for="symbol">Filter by Symbol:</label>
+        <input type="text" id="symbol" name="symbol" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="fromDate">From Date:</label>
+        <input type="date" id="fromDate" name="fromDate" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="toDate">To Date:</label>
+        <input type="date" id="toDate" name="toDate" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="orderSide">Order Side:</label>
+        <select id="orderSide" name="orderSide" class="form-control">
+            <option value="">All</option>
+            <option value="Buy">Buy</option>
+            <option value="Sell">Sell</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="orderStatus">Order Status:</label>
+        <select id="orderStatus" name="orderStatus" class="form-control">
+            <option value="">All</option>
+            <option value="Matched">Matched</option>
+            <option value="Open">Open</option>
+            <option value="Cancelled">Cancelled</option>
+        </select>
+    </div>
+
+    <button type="button" id="search-button" class="btn btn-primary">Search</button>
+</form>
+
+<!-- Transactions Table Section -->
+<h2>Transactions</h2>
+<table class="table" id="transactions-table">
+    <thead>
+        <tr>
+            <th>Reference Number</th>
+            <th>Quantity</th>
+            <th>Amount</th>
+            <th>Name</th>
+            <th>Transaction Date</th>
+            <th>Symbol</th>
+            <th>Order Side</th>
+            <th>Order Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="8">No transactions found.</td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- jQuery AJAX Call -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#search-button").click(function () {
+            var symbol = $("#symbol").val();
+            var fromDate = $("#fromDate").val();
+            var toDate = $("#toDate").val();
+            var orderSide = $("#orderSide").val();
+            var orderStatus = $("#orderStatus").val();
+
+            // Prepare the URL with query parameters
+            var url = `/api/transactions/filter?symbol=${symbol}&startDate=${fromDate}&endDate=${toDate}&orderSide=${orderSide}&orderStatus=${orderStatus}`;
+
+            // Fetch transactions by the applied filters
+            $.ajax({
+                url: url,
+                method: "GET",
+                success: function (data) {
+                    var rows = '';
+                    if (data.length > 0) {
+                        data.forEach(function (transaction) {
+                            rows += `
+                                <tr>
+                                    <td>${transaction.referenceNumber}</td>
+                                    <td>${transaction.quantity}</td>
+                                    <td>${transaction.amount}</td>
+                                    <td>${transaction.name}</td>
+                                    <td>${new Date(transaction.transactionDate).toLocaleString()}</td>
+                                    <td>${transaction.symbol}</td>
+                                    <td>${transaction.orderSide}</td>
+                                    <td>${transaction.orderStatus}</td>
+                                </tr>`;
+                        });
+                        $("#transactions-table tbody").html(rows);
+                    } else {
+                        $("#transactions-table tbody").html('<tr><td colspan="8">No transactions found.</td></tr>');
+                    }
+                },
+                error: function () {
+                    alert("An error occurred while fetching transactions.");
+                }
+            });
+        });
+    });
+</script>

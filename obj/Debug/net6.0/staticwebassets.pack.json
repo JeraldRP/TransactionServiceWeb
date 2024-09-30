@@ -5,6 +5,50 @@
       "PackagePath": "staticwebassets\\TransactionUploadService.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\JeraldSamonte\\source\\repos\\TransactionUploadService\\TransactionUploadService\\wwwroot\\Uploads\\Book 1 (1).xlsx",
+      "PackagePath": "staticwebassets\\Uploads\\Book 1 (1).xlsx"
+    },
+    {
+      "Id": "C:\\Users\\JeraldSamonte\\source\\repos\\TransactionUploadService\\TransactionUploadService\\wwwroot\\Uploads\\Book 1.xlsx",
+      "PackagePath": "staticwebassets\\Uploads\\Book 1.xlsx"
+    },
+    {
+      "Id": "C:\\Users\\JeraldSamonte\\source\\repos\\TransactionUploadService\\TransactionUploadService\\wwwroot\\Uploads\\CSVTry - Copy (1).xlsx",
+      "PackagePath": "staticwebassets\\Uploads\\CSVTry - Copy (1).xlsx"
+    },
+    {
+      "Id": "C:\\Users\\JeraldSamonte\\source\\repos\\TransactionUploadService\\TransactionUploadService\\wwwroot\\Uploads\\CSVTry - Copy (2).xlsx",
+      "PackagePath": "staticwebassets\\Uploads\\CSVTry - Copy (2).xlsx"
+    },
+    {
+      "Id": "C:\\Users\\JeraldSamonte\\source\\repos\\TransactionUploadService\\TransactionUploadService\\wwwroot\\Uploads\\CSVTry - Copy (4).xlsx",
+      "PackagePath": "staticwebassets\\Uploads\\CSVTry - Copy (4).xlsx"
+    },
+    {
+      "Id": "C:\\Users\\JeraldSamonte\\source\\repos\\TransactionUploadService\\TransactionUploadService\\wwwroot\\Uploads\\CSVTry - Copy(Sheet1) (1).csv",
+      "PackagePath": "staticwebassets\\Uploads\\CSVTry - Copy(Sheet1) (1).csv"
+    },
+    {
+      "Id": "C:\\Users\\JeraldSamonte\\source\\repos\\TransactionUploadService\\TransactionUploadService\\wwwroot\\Uploads\\CSVTry - Copy(Sheet1) (2).csv",
+      "PackagePath": "staticwebassets\\Uploads\\CSVTry - Copy(Sheet1) (2).csv"
+    },
+    {
+      "Id": "C:\\Users\\JeraldSamonte\\source\\repos\\TransactionUploadService\\TransactionUploadService\\wwwroot\\Uploads\\CSVTry - Copy(Sheet1) (3).csv",
+      "PackagePath": "staticwebassets\\Uploads\\CSVTry - Copy(Sheet1) (3).csv"
+    },
+    {
+      "Id": "C:\\Users\\JeraldSamonte\\source\\repos\\TransactionUploadService\\TransactionUploadService\\wwwroot\\Uploads\\CSVTry - Copy(Sheet1) (4).csv",
+      "PackagePath": "staticwebassets\\Uploads\\CSVTry - Copy(Sheet1) (4).csv"
+    },
+    {
+      "Id": "C:\\Users\\JeraldSamonte\\source\\repos\\TransactionUploadService\\TransactionUploadService\\wwwroot\\Uploads\\InvalidRecordsLog.txt",
+      "PackagePath": "staticwebassets\\Uploads\\InvalidRecordsLog.txt"
+    },
+    {
+      "Id": "C:\\Users\\JeraldSamonte\\source\\repos\\TransactionUploadService\\TransactionUploadService\\wwwroot\\Uploads\\PSEI Application Form_Samonte, Jerald Kristian (1).pdf",
+      "PackagePath": "staticwebassets\\Uploads\\PSEI Application Form_Samonte, Jerald Kristian (1).pdf"
+    },
+    {
       "Id": "C:\\Users\\JeraldSamonte\\source\\repos\\TransactionUploadService\\TransactionUploadService\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
